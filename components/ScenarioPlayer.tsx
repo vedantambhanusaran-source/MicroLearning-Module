@@ -3,36 +3,91 @@ import { ScenarioData, ScenarioOption } from '../types';
 import { CheckCircle, XCircle, RefreshCw, Loader2, Send } from 'lucide-react';
 import { generateNewScenario } from '../services/geminiService';
 
-const RAJ_SCENARIO: ScenarioData = {
-  id: 'raj-001',
-  context: "Raj uses AI to write an email to a client, but the tone is too casual.",
-  prompt: "What should Raj do?",
-  options: [
-    {
-      id: 'opt1',
-      label: "Send as is",
-      feedback: "Not ideal. Tone mismatch can lead to misunderstandings. Always adjust tone before sending.",
-      isCorrect: false
-    },
-    {
-      id: 'opt2',
-      label: "Edit tone manually",
-      feedback: "Correct! Always review and revise AI drafts. Ensure tone matches the relationship and context.",
-      isCorrect: true
-    },
-    {
-      id: 'opt3',
-      label: "Add an apology",
-      feedback: "Not necessary. Avoid adding apologies unless required. Maintain professional confidence.",
-      isCorrect: false
-    }
-  ]
-};
+const SAMPLE_SCENARIOS: ScenarioData[] = [
+  {
+    id: 'raj-001',
+    context: "Raj uses AI to write an email to a client, but the tone is too casual.",
+    prompt: "What should Raj do?",
+    options: [
+      {
+        id: 'opt1',
+        label: "Send as is",
+        feedback: "Not ideal. Tone mismatch can lead to misunderstandings. Always adjust tone before sending.",
+        isCorrect: false
+      },
+      {
+        id: 'opt2',
+        label: "Edit tone manually",
+        feedback: "Correct! Always review and revise AI drafts. Ensure tone matches the relationship and context.",
+        isCorrect: true
+      },
+      {
+        id: 'opt3',
+        label: "Add an apology",
+        feedback: "Not necessary. Avoid adding apologies unless required. Maintain professional confidence.",
+        isCorrect: false
+      }
+    ]
+  },
+  {
+    id: 'sarah-001',
+    context: "Sarah is using AI to analyze sensitive customer financial data but hasn't checked the AI tool's privacy policy.",
+    prompt: "What's the best approach?",
+    options: [
+      {
+        id: 'opt1',
+        label: "Use the AI tool immediately",
+        feedback: "Risky! Always verify that tools comply with data privacy regulations before processing sensitive data.",
+        isCorrect: false
+      },
+      {
+        id: 'opt2',
+        label: "Review privacy policy first",
+        feedback: "Correct! Data privacy is critical. Always check security measures and compliance before handling sensitive information.",
+        isCorrect: true
+      },
+      {
+        id: 'opt3',
+        label: "Ask colleagues for permission",
+        feedback: "Not sufficient. While collaboration is good, proper data protection assessment is your responsibility.",
+        isCorrect: false
+      }
+    ]
+  },
+  {
+    id: 'mike-001',
+    context: "Mike asked AI to generate hiring recommendations based on resume data, and it suggested candidates from only one demographic group.",
+    prompt: "How should Mike respond?",
+    options: [
+      {
+        id: 'opt1',
+        label: "Use AI's recommendations as-is",
+        feedback: "No. AI can perpetuate bias. Always review AI outputs critically and supplement with human judgment.",
+        isCorrect: false
+      },
+      {
+        id: 'opt2',
+        label: "Review for bias and diversify",
+        feedback: "Correct! Use AI as a tool, not a decision-maker. Apply human oversight to catch and correct for bias.",
+        isCorrect: true
+      },
+      {
+        id: 'opt3',
+        label: "Stop using AI for hiring",
+        feedback: "Overcorrection. AI tools are helpful when used responsibly with proper human oversight and bias checks.",
+        isCorrect: false
+      }
+    ]
+  }
+];
+
+const RAJ_SCENARIO: ScenarioData = SAMPLE_SCENARIOS[0];
 
 export const ScenarioPlayer: React.FC = () => {
   const [currentScenario, setCurrentScenario] = useState<ScenarioData>(RAJ_SCENARIO);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSelect = (id: string) => {
     if (selectedOption) return; // Prevent changing after selection
@@ -42,10 +97,23 @@ export const ScenarioPlayer: React.FC = () => {
   const loadNewScenario = async () => {
     setIsLoading(true);
     setSelectedOption(null);
-    const newScenario = await generateNewScenario();
-    if (newScenario) {
-      setCurrentScenario(newScenario);
+    
+    try {
+      const newScenario = await generateNewScenario();
+      if (newScenario) {
+        setCurrentScenario(newScenario);
+        setIsLoading(false);
+        return;
+      }
+    } catch (err) {
+      // Silently continue to sample scenarios if AI fails
+      console.error("Scenario generation error:", err);
     }
+    
+    // Fall back to rotating through sample scenarios
+    const nextIndex = (currentIndex + 1) % SAMPLE_SCENARIOS.length;
+    setCurrentIndex(nextIndex);
+    setCurrentScenario(SAMPLE_SCENARIOS[nextIndex]);
     setIsLoading(false);
   };
 
