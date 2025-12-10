@@ -33,16 +33,16 @@ const Flashcard: React.FC<{ card: FlashcardData }> = ({ card }) => {
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Front */}
-        <div className="absolute w-full h-full bg-white rounded-xl shadow-lg border border-zinc-200 p-6 flex flex-col items-center justify-center backface-hidden">
-          <div className="mb-4 p-4 bg-zinc-50 rounded-full border border-zinc-100">
+        <div className="absolute w-full h-full bg-gradient-to-br from-white to-zinc-50 rounded-xl shadow-lg border border-zinc-200 p-6 flex flex-col items-center justify-center backface-hidden hover:shadow-xl transition-all group-hover:border-violet-300">
+          <div className="mb-4 p-4 bg-gradient-to-br from-zinc-50 to-zinc-100 rounded-full border border-zinc-200 group-hover:bg-violet-50 group-hover:border-violet-300 transition-all">
             {getIcon(card.iconName)}
           </div>
           <h3 className="text-xl font-bold text-zinc-800 text-center">{card.title}</h3>
-          <p className="mt-4 text-xs text-zinc-400 uppercase tracking-widest font-semibold">Hover to learn</p>
+          <p className="mt-4 text-xs text-zinc-400 uppercase tracking-widest font-semibold group-hover:text-violet-600 transition-colors">Hover to learn</p>
         </div>
 
         {/* Back */}
-        <div className="absolute w-full h-full bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-xl shadow-xl p-6 flex items-center justify-center rotate-y-180 backface-hidden">
+        <div className="absolute w-full h-full bg-gradient-to-br from-violet-600 via-violet-700 to-fuchsia-600 rounded-xl shadow-xl p-6 flex items-center justify-center rotate-y-180 backface-hidden">
           <p className="text-white text-lg font-medium text-center leading-relaxed">
             {card.description}
           </p>
@@ -61,15 +61,17 @@ interface Props {
 
 export const Flashcards: React.FC<Props> = ({ title, subtitle, cards, variant = 'positive' }) => {
   return (
-    <div className={`py-16 px-4 sm:px-6 lg:px-8 ${variant === 'negative' ? 'bg-zinc-50' : 'bg-white'}`}>
+    <div className={`py-20 px-4 sm:px-6 lg:px-8 ${variant === 'negative' ? 'bg-gradient-to-b from-zinc-50 to-white' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-zinc-900 sm:text-4xl">{title}</h2>
-          <p className="mt-4 text-lg text-zinc-600">{subtitle}</p>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-extrabold text-zinc-900 sm:text-5xl mb-4">{title}</h2>
+          <p className="text-xl text-zinc-600 max-w-3xl mx-auto font-medium">{subtitle}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {cards.map((card) => (
-            <Flashcard key={card.id} card={card} />
+          {cards.map((card, idx) => (
+            <div key={card.id} className="animate-fadeIn" style={{ animationDelay: `${idx * 100}ms` }}>
+              <Flashcard card={card} />
+            </div>
           ))}
         </div>
       </div>

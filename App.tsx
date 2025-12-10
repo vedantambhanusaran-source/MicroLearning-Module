@@ -23,59 +23,58 @@ function App() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans">
       {/* Sticky Header */}
-      <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-zinc-200 z-40 supports-[backdrop-filter]:bg-white/60">
+      <header className="fixed top-0 w-full bg-gradient-to-r from-white via-white to-violet-50/50 backdrop-blur-md border-b border-zinc-200 z-40 supports-[backdrop-filter]:bg-white/60 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-violet-600 p-1.5 rounded-lg shadow-md shadow-violet-200">
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="bg-gradient-to-br from-violet-600 to-violet-700 p-2 rounded-lg shadow-md shadow-violet-200 group-hover:shadow-lg group-hover:shadow-violet-300 transition-all">
                 <Target className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-zinc-900 tracking-tight">MicroLearn: AI Literacy</span>
+            <div>
+              <span className="font-bold text-lg text-zinc-900 tracking-tight block">MicroLearn</span>
+              <span className="text-xs text-violet-600 font-semibold">AI Literacy</span>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920&auto=format&fit=crop" 
-            alt="Futuristic Office" 
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-50 via-transparent to-zinc-50"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 mix-blend-overlay"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-violet-200/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-fuchsia-200/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-200/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <span className="inline-block py-1 px-3 rounded-full bg-violet-100 text-violet-700 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm border border-violet-200">
-            5-Minute Microlearning
-          </span>
-          <h1 className="text-5xl md:text-6xl font-extrabold text-zinc-900 tracking-tight mb-6">
+          <div className="inline-block py-2 px-4 rounded-full bg-gradient-to-r from-violet-100 to-fuchsia-100 text-violet-700 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm border border-violet-300/50 backdrop-blur">
+            ✨ 5-Minute Microlearning
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-violet-800 to-fuchsia-700 tracking-tight mb-6">
             AI Literacy at Work
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-zinc-600 max-w-2xl mx-auto leading-relaxed font-medium">
             Understand what AI can—and cannot—do to boost your productivity safely.
           </p>
         </div>
       </section>
 
       {/* Learning Objectives */}
-      <section className="py-12 bg-white border-y border-zinc-100">
+      <section className="py-16 bg-gradient-to-r from-white via-violet-50/30 to-white border-y border-zinc-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
-                <div className="text-sm font-bold uppercase text-zinc-400 tracking-widest">You will learn to:</div>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
+                <div className="text-sm font-bold uppercase text-violet-600 tracking-widest">📚 You will learn to:</div>
                 <div className="flex flex-col sm:flex-row gap-6">
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-lg shadow-cyan-200"></div>
-                        <span className="font-medium text-zinc-700">Identify Capabilities</span>
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-cyan-100/50 hover:border-cyan-300/50 transition-all">
+                        <div className="w-3 h-3 rounded-full bg-cyan-500 shadow-lg shadow-cyan-300"></div>
+                        <span className="font-semibold text-zinc-700">Identify Capabilities</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-fuchsia-500 shadow-lg shadow-fuchsia-200"></div>
-                        <span className="font-medium text-zinc-700">Recognize Limitations</span>
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-fuchsia-100/50 hover:border-fuchsia-300/50 transition-all">
+                        <div className="w-3 h-3 rounded-full bg-fuchsia-500 shadow-lg shadow-fuchsia-300"></div>
+                        <span className="font-semibold text-zinc-700">Recognize Limitations</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-200"></div>
-                        <span className="font-medium text-zinc-700">Make Ethical Decisions</span>
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-emerald-100/50 hover:border-emerald-300/50 transition-all">
+                        <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-300"></div>
+                        <span className="font-semibold text-zinc-700\">Make Ethical Decisions</span>
                     </div>
                 </div>
             </div>
@@ -112,13 +111,16 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-zinc-900 text-zinc-400 py-12 text-center border-t border-zinc-800">
+      <footer className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-zinc-400 py-16 text-center border-t border-zinc-700/50">
         <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-center items-center gap-2 mb-4">
                 <Target className="w-6 h-6 text-violet-500" />
-                <span className="font-bold text-zinc-200">MicroLearn</span>
+                <span className="font-bold text-lg text-zinc-100">MicroLearn</span>
             </div>
-            <p className="text-sm">© {new Date().getFullYear()} Corporate Training Division.</p>
+            <p className="text-sm mb-8">© {new Date().getFullYear()} Corporate Training Division. Empowering AI Literacy.</p>
+            <div className="border-t border-zinc-700/30 pt-8 text-xs text-zinc-500">
+              <p>Built with ❤️ for modern learners | 5-minute microlearning modules for busy professionals</p>
+            </div>
         </div>
       </footer>
     </div>
