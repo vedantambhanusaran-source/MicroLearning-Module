@@ -111,9 +111,11 @@ export const ScenarioPlayer: React.FC = () => {
     }
     
     // Fall back to rotating through sample scenarios
-    const nextIndex = (currentIndex + 1) % SAMPLE_SCENARIOS.length;
-    setCurrentIndex(nextIndex);
-    setCurrentScenario(SAMPLE_SCENARIOS[nextIndex]);
+    setCurrentIndex(prevIndex => {
+      const nextIndex = (prevIndex + 1) % SAMPLE_SCENARIOS.length;
+      setCurrentScenario(SAMPLE_SCENARIOS[nextIndex]);
+      return nextIndex;
+    });
     setIsLoading(false);
   };
 
