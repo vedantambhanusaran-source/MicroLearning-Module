@@ -1,13 +1,31 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { ScenarioData } from "../types";
 
-// Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize Gemini Client - handle undefined API key gracefully
+let ai: GoogleGenAI | null = null;
+
+const initializeAI = () => {
+  if (!ai) {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      console.warn("GEMINI_API_KEY is not configured");
+      return null;
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 /**
  * Generates a new workplace AI ethics scenario dynamically.
  */
 export const generateNewScenario = async (): Promise<ScenarioData | null> => {
+  const aiClient = initializeAI();
+  if (!aiClient) {
+    console.error("AI client not initialized - API key missing");
+    return null;
+  }
+
   try {
     const model = "gemini-2.5-flash";
     const prompt = `
@@ -43,7 +61,7 @@ export const generateNewScenario = async (): Promise<ScenarioData | null> => {
       }
     `;
 
-    const response = await ai.models.generateContent({
+    const response = await aiClient.models.generateContent({
       model,
       contents: prompt,
       config: {
@@ -88,8 +106,13 @@ export const generateNewScenario = async (): Promise<ScenarioData | null> => {
  * Simple AI Tutor to answer questions about the content
  */
 export const askAITutor = async (question: string): Promise<string> => {
+  const aiClient = initializeAI();
+  if (!aiClient) {
+    return "AI service is not configured. Please add your API key.";
+  }
+
   try {
-    const response = await ai.models.generateContent({
+    const response = await aiClient.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `You are an expert AI Literacy Tutor. Answer the user's question about AI in the workplace clearly and concisely (max 3 sentences). Question: ${question}`,
     });
