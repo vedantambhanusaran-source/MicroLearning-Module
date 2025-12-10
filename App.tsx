@@ -74,7 +74,7 @@ function App() {
                     </div>
                     <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-emerald-100/50 hover:border-emerald-300/50 transition-all">
                         <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-300"></div>
-                        <span className="font-semibold text-zinc-700\">Make Ethical Decisions</span>
+                        <span className="font-semibold text-zinc-700">Make Ethical Decisions</span>
                     </div>
                 </div>
             </div>
